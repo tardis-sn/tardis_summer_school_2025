@@ -1,0 +1,63 @@
+# Example YAML configuration for TARDIS
+tardis_config_version: v1.0
+
+supernova:
+  luminosity_requested: 9.44 log_lsun
+  time_explosion: 13 day
+
+atom_data: kurucz_cd23_chianti_H_He_latest.h5
+
+model:
+  structure:
+    type: specific
+    velocity:
+      start: 1.1e4 km/s
+      stop: 20000 km/s
+      num: 20
+    density:
+      type: branch85_w7
+
+  abundances:
+    type: uniform
+    C: 0.15
+    O: 0.19
+    Mg: 0.03
+    Si: 0.30
+    S: 0.19
+    Ca: 0.07
+    Fe: 0.07
+
+plasma:
+  initial_t_inner: 9000 K
+  disable_electron_scattering: no
+  ionization: nebular
+  excitation: dilute-lte
+  radiative_rates_type: dilute-blackbody
+  line_interaction_type: macroatom
+
+montecarlo:
+  seed: 23111963
+  no_of_packets: 1e4
+  iterations: 30
+  nthreads: 5
+
+  last_no_of_packets: 1e5
+  no_of_virtual_packets: 5
+
+  convergence_strategy:
+    type: damped
+    damping_constant: 0.5
+    threshold: 0.05
+    fraction: 0.8
+    hold_iterations: 20
+    t_inner:
+      damping_constant: 0.5
+
+spectrum:
+  start: 500 angstrom
+  stop: 20000 angstrom
+  num: 10000
+  integrated: 
+    points: 1000
+    interpolate_shells: 80
+    compute: 'CPU'
